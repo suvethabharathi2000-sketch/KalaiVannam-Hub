@@ -4,6 +4,7 @@ package com.kalaivannamhub.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.kalaivannamhub.dto.RegisterRequest;
 import com.kalaivannamhub.entity.User;
 import com.kalaivannamhub.service.UserService;
 
@@ -17,9 +18,7 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-
-        return userService.registerUser(user);
-
+    public User register(@RequestBody RegisterRequest request) {
+        return userService.register(request);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kalaivannamhub.dto.LoginRequest;
 import com.kalaivannamhub.dto.LoginResponse;
+import com.kalaivannamhub.dto.RegisterRequest;
 import com.kalaivannamhub.entity.User;
 import com.kalaivannamhub.repository.UserRepository;
 import com.kalaivannamhub.security.JwtService;
@@ -56,6 +57,23 @@ public class UserService {
                 user.getRole().name(),
                 user.getEmail()
         );
+    }
+    public User register(RegisterRequest request) {
+
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        User user = new User();
+
+        user.setFullName(request.getFullName());
+        user.setEmail(request.getEmail());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setRole(request.getRole());
+        user.setVerified(false);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        return userRepository.save(user);
     }
 
 }
